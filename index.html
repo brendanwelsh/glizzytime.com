@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hotdog is Getting Hitched</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Luckiest+Guy&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --mustard: #FFD700;
+    --ketchup: #DC143C;
+    --bg-dark: #1a0a2e;
+    --pink-accent: #FF69B4;
+  }
+
+  html, body {
+    overflow: hidden;
+    background: var(--bg-dark);
+    color: #fff;
+    font-family: 'Patrick Hand', cursive;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.08) 0%, transparent 60%),
+      linear-gradient(180deg, #1a0a2e 0%, #16213e 100%);
+  }
+
+  /* === TILED GLIZZY WALLPAPER === */
+  .glizzy-wallpaper {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 60px);
+    grid-template-rows: repeat(auto-fill, 60px);
+    gap: 4px;
+    padding: 4px;
+    opacity: 0.18;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .wall-dog {
+    font-size: 2.2rem;
+    line-height: 1;
+    text-align: center;
+    animation: wallPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes wallPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* === FLOATING HOTDOGS === */
+  .hotdog-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .floating-dog {
+    position: absolute;
+    animation: floatUp linear infinite;
+    opacity: 0.5;
+    will-change: transform;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(105vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(360deg); }
+  }
+
+  /* === COUNTDOWN (centered in upper half) === */
+  .countdown-section {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12vh;
+    text-align: center;
+  }
+
+  .title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, var(--mustard), #FFA500, var(--ketchup));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.4));
+  }
+
+  .date {
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .countdown-timer {
+    display: flex;
+    gap: clamp(0.6rem, 2vw, 1.5rem);
+    justify-content: center;
+  }
+
+  .countdown-unit {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 14px;
+    padding: clamp(0.7rem, 1.5vw, 1rem) clamp(0.9rem, 2vw, 1.5rem);
+    min-width: clamp(65px, 11vw, 100px);
+    backdrop-filter: blur(8px);
+  }
+
+  .countdown-number {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--mustard);
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(255,215,0,0.3);
+  }
+
+  .countdown-text {
+    font-size: clamp(0.65rem, 1.3vw, 0.9rem);
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.25rem;
+  }
+
+  /* === HOTDOG MAN — fixed to bottom center === */
+  .hotdog-man {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .hotdog-man img {
+    display: block;
+    width: clamp(500px, 85vw, 1100px);
+    height: auto;
+    filter: drop-shadow(0 0 60px rgba(255,215,0,0.4)) drop-shadow(0 -5px 50px rgba(0,0,0,0.6));
+  }
+</style>
+</head>
+<body>
+
+<!-- GLIZZY WALLPAPER -->
+<div class="glizzy-wallpaper" id="glizzyWall"></div>
+
+<!-- FLOATING HOTDOGS -->
+<div class="hotdog-bg" id="hotdogBg"></div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section">
+  <h1 class="title">The Hotdog Is<br>Getting Hitched</h1>
+  <p class="date">Thursday, April 23rd, 2026</p>
+  <div class="countdown-timer">
+    <div class="countdown-unit">
+      <div class="countdown-number" id="days">--</div>
+      <div class="countdown-text">Days</div>
+    </div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="hours">--</div>
+      <div class="countdown-text">Hours</div>
+    </div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="minutes">--</div>
+      <div class="countdown-text">Minutes</div>
+    </div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="seconds">--</div>
+      <div class="countdown-text">Seconds</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOTDOG MAN — pinned to bottom -->
+<div class="hotdog-man">
+  <img src="hotdog-man.png" alt="The Hotdog Man">
+</div>
+
+<script>
+  // === COUNTDOWN ===
+  const weddingDate = new Date('2026-04-23T00:00:00').getTime();
+
+  function updateCountdown() {
+    const diff = weddingDate - Date.now();
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '00';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+      return;
+    }
+    document.getElementById('days').textContent = String(Math.floor(diff / 864e5)).padStart(2, '0');
+    document.getElementById('hours').textContent = String(Math.floor((diff / 36e5) % 24)).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(Math.floor((diff / 6e4) % 60)).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(Math.floor((diff / 1e3) % 60)).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // === FLOATING HOTDOGS ===
+  const bg = document.getElementById('hotdogBg');
+  for (let i = 0; i < 100; i++) {
+    const el = document.createElement('div');
+    el.className = 'floating-dog';
+    el.textContent = '🌭';
+    el.style.left = (Math.random() * 100) + 'vw';
+    el.style.fontSize = (2 + Math.random() * 4) + 'rem';
+    el.style.opacity = (0.3 + Math.random() * 0.5);
+    el.style.animationDuration = (8 + Math.random() * 12) + 's';
+    el.style.animationDelay = -(Math.random() * 20) + 's';
+    bg.appendChild(el);
+  }
+
+  // === GLIZZY WALLPAPER TILES ===
+  const wall = document.getElementById('glizzyWall');
+  const cols = Math.ceil(window.innerWidth / 64);
+  const rows = Math.ceil(window.innerHeight / 64);
+  for (let i = 0; i < cols * rows; i++) {
+    const d = document.createElement('div');
+    d.className = 'wall-dog';
+    d.textContent = '🌭';
+    d.style.animationDelay = (Math.random() * 4) + 's';
+    wall.appendChild(d);
+  }
+</script>
+
+</body>
+</html>
