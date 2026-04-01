@@ -9,7 +9,7 @@
 <h1 align="center">Glizzy Timer</h1>
 <p align="center"><strong>The Hotdog is Getting Hitched</strong></p>
 <p align="center">
-  <a href="https://glizzytimer.com">glizzytimer.com</a>
+  <a href="https://glizzytime.com">glizzytime.com</a>
 </p>
 
 <p align="center">
