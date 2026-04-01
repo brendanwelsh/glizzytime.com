@@ -3,67 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Hotdog is Getting Hitched</title>
+<title>Countdown to Brents Wedding</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 36 Q10 12 32 12 Q54 12 54 36 Z' fill='%23D2891B'/%3E%3Cellipse cx='22' cy='20' rx='2' ry='1.5' fill='%23F5E6C8' transform='rotate(-15 22 20)'/%3E%3Cellipse cx='35' cy='17' rx='2' ry='1.5' fill='%23F5E6C8' transform='rotate(20 35 17)'/%3E%3Cellipse cx='44' cy='24' rx='2' ry='1.5' fill='%23F5E6C8' transform='rotate(-5 44 24)'/%3E%3Cellipse cx='28' cy='25' rx='2' ry='1.5' fill='%23F5E6C8' transform='rotate(10 28 25)'/%3E%3Crect x='8' y='30' width='48' height='12' rx='6' fill='%23C8442E'/%3E%3Cpath d='M12 32 L17 28 L22 32 L27 28 L32 32 L37 28 L42 32 L47 28 L52 32' stroke='%23DC143C' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M12 36 L17 40 L22 36 L27 40 L32 36 L37 40 L42 36 L47 40 L52 36' stroke='%23FFD700' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M10 36 Q10 52 32 52 Q54 52 54 36 Z' fill='%23D2891B'/%3E%3Crect x='8' y='34' width='48' height='6' fill='%23D2891B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Luckiest+Guy&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800;900&display=block');
+
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --mustard: #FFD700;
     --ketchup: #DC143C;
-    --bg-dark: #1a0a2e;
-    --pink-accent: #FF69B4;
+    --bg: #0a0a0f;
   }
 
   html, body {
-    overflow: hidden;
-    background: var(--bg-dark);
+    background: var(--bg);
     color: #fff;
-    font-family: 'Patrick Hand', cursive;
-    height: 100vh;
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
     width: 100vw;
+    overflow-x: hidden;
   }
 
   body {
     background:
-      radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.08) 0%, transparent 60%),
-      linear-gradient(180deg, #1a0a2e 0%, #16213e 100%);
+      linear-gradient(180deg, rgba(10,10,15,0.75) 0%, rgba(10,10,15,0.5) 40%, rgba(10,10,15,0.65) 100%),
+      url('bg.jpg') center center / cover no-repeat fixed;
   }
 
-  /* === TILED GLIZZY WALLPAPER === */
-  .glizzy-wallpaper {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 60px);
-    grid-template-rows: repeat(auto-fill, 60px);
-    gap: 4px;
-    padding: 4px;
-    opacity: 0.18;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .wall-dog {
-    font-size: 2.2rem;
-    line-height: 1;
-    text-align: center;
-    animation: wallPulse 4s ease-in-out infinite;
-  }
-
-  @keyframes wallPulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
+  .header { opacity: 0; transition: opacity 0.4s ease; }
+  .fonts-ready .header { opacity: 1; }
 
   /* === FLOATING HOTDOGS === */
   .hotdog-bg {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    inset: 0;
     pointer-events: none;
     z-index: 1;
     overflow: hidden;
@@ -72,7 +48,6 @@
   .floating-dog {
     position: absolute;
     animation: floatUp linear infinite;
-    opacity: 0.5;
     will-change: transform;
   }
 
@@ -81,99 +56,527 @@
     100% { transform: translateY(-10vh) rotate(360deg); }
   }
 
-  /* === COUNTDOWN (centered in upper half) === */
-  .countdown-section {
+  /* === HEADER — small, top, centered === */
+  .header {
     position: relative;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 12vh;
     text-align: center;
+    padding: 3vh 20px 0;
+    pointer-events: none;
+  }
+
+  .top-date {
+    font-size: clamp(0.6rem, 1vw, 0.75rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 0.4rem;
   }
 
   .title {
-    font-family: 'Luckiest Guy', cursive;
-    font-size: clamp(2rem, 7vw, 4.5rem);
-    line-height: 1.1;
-    margin-bottom: 0.3rem;
-    background: linear-gradient(135deg, var(--mustard), #FFA500, var(--ketchup));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.4));
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-transform: uppercase;
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
-  .date {
-    font-family: 'Patrick Hand', cursive;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
+  .title .highlight {
+    color: var(--mustard);
+    text-shadow: 0 0 30px rgba(255,215,0,0.2);
+  }
+
+  .title .ketchup {
+    color: var(--ketchup);
+    text-shadow: 0 0 20px rgba(220,20,60,0.2);
+  }
+
+  /* Congrats state — replaces title */
+  .title.congrats-mode {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .congrats-title {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-top: 1rem;
+  }
+
+  .congrats-title .gold {
+    color: var(--mustard);
+    text-shadow: 0 0 30px rgba(255,215,0,0.3);
+  }
+
+  .congrats-title.show {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .countdown-timer {
     display: flex;
-    gap: clamp(0.6rem, 2vw, 1.5rem);
+    gap: clamp(0.4rem, 1vw, 0.6rem);
     justify-content: center;
+    margin-top: 0.8rem;
   }
 
   .countdown-unit {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,215,0,0.2);
-    border-radius: 14px;
-    padding: clamp(0.7rem, 1.5vw, 1rem) clamp(0.9rem, 2vw, 1.5rem);
-    min-width: clamp(65px, 11vw, 100px);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,215,0,0.1);
+    border-radius: 8px;
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.5rem, 1vw, 0.8rem);
+    min-width: clamp(48px, 5vw, 70px);
     backdrop-filter: blur(8px);
+    text-align: center;
   }
 
   .countdown-number {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
     color: var(--mustard);
     line-height: 1;
-    text-shadow: 0 0 15px rgba(255,215,0,0.3);
+    text-shadow: 0 0 15px rgba(255,215,0,0.15);
   }
 
   .countdown-text {
-    font-size: clamp(0.65rem, 1.3vw, 0.9rem);
-    color: rgba(255,255,255,0.5);
+    font-size: clamp(0.45rem, 0.7vw, 0.55rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.25);
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    margin-top: 0.25rem;
+    margin-top: 0.1rem;
   }
 
-  /* === HOTDOG MAN — fixed to bottom center === */
-  .hotdog-man {
+  /* === HOTDOG MAN — centered, pinned to bottom === */
+  .hotdog-man-wrap {
     position: fixed;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     pointer-events: none;
+    overflow: visible;
+  }
+
+  .hotdog-man {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    pointer-events: auto;
+    transition: translate 0s;
+    will-change: translate;
+    overflow: visible;
+  }
+
+  .hotdog-man .shake-wrap {
+    transition: transform 0.15s ease;
+    position: relative;
+    z-index: 2;
   }
 
   .hotdog-man img {
     display: block;
-    width: clamp(500px, 85vw, 1100px);
+    width: clamp(280px, 50vw, 600px);
     height: auto;
-    filter: drop-shadow(0 0 60px rgba(255,215,0,0.4)) drop-shadow(0 -5px 50px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 0 50px rgba(255,215,0,0.25)) drop-shadow(0 -5px 40px rgba(0,0,0,0.5));
+    margin-left: -60px;
+  }
+
+  .nozzle {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-68%);
+    width: 40%;
+    z-index: -1;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    display: none;
+    pointer-events: none;
+  }
+
+  .nozzle.visible {
+    display: block;
+  }
+
+  .nozzle svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hotdog-man.launching {
+    transition: translate 1.4s cubic-bezier(0.4, 0, 1, 0.4);
+    translate: 0 -200vh;
+  }
+
+  .hotdog-man.resetting {
+    transition: none;
+    translate: 0 100vh;
+  }
+
+  .hotdog-man.returning {
+    transition: translate 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    translate: 0 0;
+  }
+
+  /* === ROCKET UI === */
+  .rocket-ui {
+    position: relative;
+    z-index: 12;
+    text-align: center;
+    padding: 1rem 0 2rem;
+  }
+
+  .rocket-hint {
+    text-align: center;
+    pointer-events: none;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+    font-weight: 600;
+    color: rgba(255,255,255,0.25);
+    transition: opacity 0.5s;
+    margin-bottom: 0.3rem;
+  }
+  .rocket-hint.hidden { opacity: 0; }
+
+  .launch-counter {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.12em;
+    margin-top: 0.6rem;
+    pointer-events: none;
+  }
+
+  .launch-counter span {
+    color: #fff;
+  }
+
+  .tap-counter {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-bottom: 0.5rem;
+  }
+  .tap-counter.visible { opacity: 1; }
+
+  .tap-pip {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,215,0,0.25);
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .tap-pip.filled {
+    background: var(--mustard);
+    border-color: var(--mustard);
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+    transform: scale(1.3);
+  }
+
+  /* === AUTO LAUNCH + LEADERBOARD === */
+  .controls {
+    display: none;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.4rem;
+    pointer-events: auto;
+  }
+  .controls.show { display: flex; }
+
+  .registry-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 8px 20px;
+    background: rgba(255,215,0,0.12);
+    border: 1px solid rgba(255,215,0,0.25);
+    border-radius: 8px;
+    color: var(--mustard);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    pointer-events: auto;
+  }
+
+  .registry-link:hover {
+    background: rgba(255,215,0,0.2);
+    border-color: var(--mustard);
+    transform: translateY(-1px);
+  }
+
+  .auto-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    transition: all 0.2s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .auto-toggle:hover { background: rgba(255,255,255,0.1); }
+  .auto-toggle.on { border-color: var(--mustard); color: var(--mustard); }
+
+  .auto-toggle .toggle-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+
+  .auto-toggle.on .toggle-dot {
+    background: var(--mustard);
+    box-shadow: 0 0 8px rgba(255,215,0,0.5);
+  }
+
+  .lb-btn {
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    transition: all 0.2s;
+  }
+
+  .lb-btn:hover { background: rgba(255,255,255,0.1); color: var(--mustard); }
+
+  /* Leaderboard modal */
+  .lb-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-overlay.open { display: flex; }
+
+  .lb-modal {
+    background: #111;
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 16px;
+    padding: 28px;
+    width: 90%;
+    max-width: 380px;
+    position: relative;
+  }
+
+  .lb-modal h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--mustard);
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .lb-modal .lb-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  .lb-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.3);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .lb-scores {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .lb-scores li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+  }
+
+  .lb-rank {
+    width: 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .lb-rank.gold { color: var(--mustard); }
+
+  .lb-initials {
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    flex: 1;
+  }
+
+  .lb-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--mustard);
+  }
+
+  .lb-empty {
+    text-align: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 12px;
+    padding: 20px 0;
+  }
+
+  /* Initials entry */
+  .lb-entry {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .lb-entry input {
+    width: 70px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: center;
+    outline: none;
+  }
+
+  .lb-entry input:focus { border-color: var(--mustard); }
+
+  .lb-entry .lb-your-score {
+    flex: 1;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .lb-entry .lb-your-score span {
+    color: var(--mustard);
+    font-weight: 700;
+  }
+
+  .lb-entry button {
+    padding: 8px 14px;
+    background: var(--mustard);
+    color: #111;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Exploding hotdog emojis — behind Brent */
+  .dog-burst {
+    position: fixed;
+    font-size: 2rem;
+    z-index: 3;
+    pointer-events: none;
+    animation: dogBurst 1.5s ease-out forwards;
+  }
+
+  @keyframes dogBurst {
+    0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translate(var(--bx), var(--by)) rotate(var(--br)) scale(0.3); }
+  }
+
+  @keyframes rumble {
+    0%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(-2deg) translateY(2px); }
+    30% { transform: rotate(3deg) translateY(-3px); }
+    50% { transform: rotate(-2deg) translateY(2px); }
+    70% { transform: rotate(4deg) translateY(-2px); }
+    90% { transform: rotate(-3deg) translateY(2px); }
+  }
+  .hotdog-man.rumbling { animation: rumble 0.15s linear infinite; }
+
+  @keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-4px, 3px); }
+    30% { transform: translate(-3px, 4px); }
+    50% { transform: translate(-3px, 3px); }
+    70% { transform: translate(-4px, 2px); }
+    90% { transform: translate(-2px, 3px); }
+  }
+  body.screen-shake { animation: screenShake 0.15s linear 3; }
+
+  #rocketCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw; height: 100vh;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 600px) {
+    .header { padding-top: 2vh; }
+    .title { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+    .congrats-title { font-size: clamp(1.6rem, 6.5vw, 2.2rem); }
+    .hotdog-man img { width: clamp(280px, 80vw, 400px); }
+    .countdown-unit { min-width: clamp(45px, 16vw, 65px); }
+    .countdown-number { font-size: clamp(1.3rem, 5vw, 1.8rem); }
   }
 </style>
 </head>
 <body>
 
-<!-- GLIZZY WALLPAPER -->
-<div class="glizzy-wallpaper" id="glizzyWall"></div>
-
-<!-- FLOATING HOTDOGS -->
 <div class="hotdog-bg" id="hotdogBg"></div>
 
-<!-- COUNTDOWN -->
-<div class="countdown-section">
-  <h1 class="title">The Hotdog Is<br>Getting Hitched</h1>
-  <p class="date">Thursday, April 23rd, 2026</p>
+<!-- HEADER — small at top -->
+<div class="header">
+  <p class="top-date">Thursday, April 23rd, 2026</p>
+  <h1 class="title" id="mainTitle">The <span class="highlight">Hotdog</span> is Getting <span class="ketchup">Hitched</span></h1>
   <div class="countdown-timer">
     <div class="countdown-unit">
       <div class="countdown-number" id="days">--</div>
@@ -192,61 +595,533 @@
       <div class="countdown-text">Seconds</div>
     </div>
   </div>
+  <div class="launch-counter" id="launchCounter">Global Hotdog Launches: <span>0</span></div>
+  <div class="controls show" id="controls">
+    <div class="auto-toggle" id="autoToggle">
+      <div class="toggle-dot"></div>
+      Enable Auto Launch
+    </div>
+    <button class="lb-btn" id="lbBtn">Launch Leaderboard</button>
+  </div>
+  <a href="https://www.zola.com/wedding/couldntbarrettwithoutyou/registry" target="_blank" rel="noopener" class="registry-link">&#127881; Gift Registry &#127881;</a>
+  <div class="congrats-title" id="congratsTitle">Congratulations<br><span class="gold">Brent &amp; Lily Potter!</span></div>
 </div>
 
-<!-- HOTDOG MAN — pinned to bottom -->
-<div class="hotdog-man">
-  <img src="hotdog-man.png" alt="The Hotdog Man">
+<!-- HOTDOG MAN — centered, the focus -->
+<div class="hotdog-man-wrap">
+  <div class="rocket-hint" id="rocketHint">TAP THE GLIZZY 5X TO LAUNCH!</div>
+  <div class="hotdog-man" id="hotdogMan">
+    <div class="shake-wrap" id="shakeWrap">
+      <img src="hotdog-man.png" alt="The Hotdog Man">
+      <!-- Rocket nozzle — inside shake-wrap so it moves with Brent -->
+      <div class="nozzle">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="nozMetal" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6b7280"/>
+              <stop offset="15%" stop-color="#9ca3af"/>
+              <stop offset="30%" stop-color="#d1d5db"/>
+              <stop offset="45%" stop-color="#e5e7eb"/>
+              <stop offset="55%" stop-color="#d1d5db"/>
+              <stop offset="70%" stop-color="#9ca3af"/>
+              <stop offset="85%" stop-color="#6b7280"/>
+              <stop offset="100%" stop-color="#4b5563"/>
+            </linearGradient>
+            <radialGradient id="nozGlow" cx="0.5" cy="1" r="0.8">
+              <stop offset="0%" stop-color="#1f2937"/>
+              <stop offset="60%" stop-color="#111827"/>
+              <stop offset="100%" stop-color="#0a0a0f"/>
+            </radialGradient>
+            <linearGradient id="nozRim" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4b5563"/>
+              <stop offset="20%" stop-color="#9ca3af"/>
+              <stop offset="40%" stop-color="#e5e7eb"/>
+              <stop offset="50%" stop-color="#f3f4f6"/>
+              <stop offset="60%" stop-color="#e5e7eb"/>
+              <stop offset="80%" stop-color="#9ca3af"/>
+              <stop offset="100%" stop-color="#4b5563"/>
+            </linearGradient>
+          </defs>
+          <!-- Narrow top (attaches to hotdog), tapers to narrower exhaust at bottom -->
+          <path d="M65,0 C62,0 58,4 54,12 C48,28 44,52 40,78 C38,96 36,112 35,124 C34,130 34,136 34,138 L166,138 C166,136 166,130 165,124 C164,112 162,96 160,78 C156,52 152,28 146,12 C142,4 138,0 135,0 Z"
+            fill="url(#nozMetal)" stroke="#4b5563" stroke-width="1"/>
+          <!-- Top narrow attachment ring (connects to hotdog body) -->
+          <ellipse cx="100" cy="2" rx="35" ry="5" fill="#6b7280" stroke="#4b5563" stroke-width="1"/>
+          <ellipse cx="100" cy="2" rx="33" ry="4" fill="none" stroke="#9ca3af" stroke-width="0.5"/>
+          <!-- Bottom exhaust opening (narrower) -->
+          <ellipse cx="100" cy="136" rx="66" ry="10" fill="url(#nozGlow)"/>
+          <ellipse cx="100" cy="136" rx="66" ry="12" fill="none" stroke="url(#nozRim)" stroke-width="3"/>
+          <!-- Panel lines -->
+          <path d="M72,6 C70,24 62,56 55,88 C50,106 46,122 44,132" fill="none" stroke="rgba(75,85,99,0.3)" stroke-width="0.8"/>
+          <path d="M128,6 C130,24 138,56 145,88 C150,106 154,122 156,132" fill="none" stroke="rgba(75,85,99,0.3)" stroke-width="0.8"/>
+          <path d="M90,4 C88,22 84,54 80,86 C77,102 74,118 72,132" fill="none" stroke="rgba(156,163,175,0.15)" stroke-width="0.5"/>
+          <path d="M110,4 C112,22 116,54 120,86 C123,102 126,118 128,132" fill="none" stroke="rgba(156,163,175,0.15)" stroke-width="0.5"/>
+          <!-- Rivet dots along top ring -->
+          <circle cx="72" cy="3" r="1.5" fill="#4b5563"/>
+          <circle cx="85" cy="1.5" r="1.5" fill="#4b5563"/>
+          <circle cx="100" cy="1" r="1.5" fill="#4b5563"/>
+          <circle cx="115" cy="1.5" r="1.5" fill="#4b5563"/>
+          <circle cx="128" cy="3" r="1.5" fill="#4b5563"/>
+        </svg>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="rocket-ui">
+  <div class="tap-counter" id="tapCounter"></div>
+</div>
+
+<!-- Leaderboard modal -->
+<div class="lb-overlay" id="lbOverlay" onclick="if(event.target===this)closeLb()">
+  <div class="lb-modal">
+    <button class="lb-close" onclick="closeLb()">&times;</button>
+    <h2>Glizzy Rating</h2>
+    <p class="lb-sub">Hall of Glizzy</p>
+
+    <!-- Gate: enter initials first -->
+    <div id="lbGate">
+      <p style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:12px;">Enter your initials to view the leaderboard</p>
+      <div class="lb-entry">
+        <input type="text" id="lbInitials" maxlength="3" placeholder="AAA" style="flex:1;">
+        <button onclick="enterLeaderboard()">Enter</button>
+      </div>
+    </div>
+
+    <!-- Leaderboard content (hidden until initials entered) -->
+    <div id="lbContent" style="display:none;">
+      <div style="text-align:center;margin-bottom:12px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--mustard);" id="lbTotal">0</div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.15em;">Total Global Launches</div>
+      </div>
+      <ul class="lb-scores" id="lbScores"></ul>
+      <div style="margin-top:8px;text-align:center;font-size:12px;color:rgba(255,255,255,0.35);">
+        You (<span id="lbYourInitials" style="font-weight:800;color:rgba(255,255,255,0.6);">???</span>): <span id="lbYourScore" style="color:var(--mustard);font-weight:700;">0</span> launches
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="rocketCanvas"></canvas>
 
 <script>
-  // === COUNTDOWN ===
-  const weddingDate = new Date('2026-04-23T00:00:00').getTime();
-
+  var weddingDate = new Date('2026-04-23T00:00:00').getTime();
   function updateCountdown() {
-    const diff = weddingDate - Date.now();
-    if (diff <= 0) {
-      document.getElementById('days').textContent = '00';
-      document.getElementById('hours').textContent = '00';
-      document.getElementById('minutes').textContent = '00';
-      document.getElementById('seconds').textContent = '00';
-      return;
-    }
+    var diff = weddingDate - Date.now();
+    if (diff <= 0) { ['days','hours','minutes','seconds'].forEach(function(id) { document.getElementById(id).textContent = '00'; }); return; }
     document.getElementById('days').textContent = String(Math.floor(diff / 864e5)).padStart(2, '0');
     document.getElementById('hours').textContent = String(Math.floor((diff / 36e5) % 24)).padStart(2, '0');
     document.getElementById('minutes').textContent = String(Math.floor((diff / 6e4) % 60)).padStart(2, '0');
     document.getElementById('seconds').textContent = String(Math.floor((diff / 1e3) % 60)).padStart(2, '0');
   }
-
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() { document.body.classList.add('fonts-ready'); });
+  }
+  setTimeout(function() { document.body.classList.add('fonts-ready'); }, 1500);
+
+  // === ROCKET ENGINE ===
+  var hotdogMan = document.getElementById('hotdogMan');
+  var mainTitle = document.getElementById('mainTitle');
+  var congratsTitle = document.getElementById('congratsTitle');
+  var canvas = document.getElementById('rocketCanvas');
+  var ctx = canvas.getContext('2d');
+  var brentTaps = 0, brentTimer = null, brentLaunching = false;
+  var launchCount = parseInt(localStorage.getItem('glizzyLaunches') || '0');
+  var launchCounterEl = document.getElementById('launchCounter');
+  function updateLaunchCounter() {
+    launchCounterEl.textContent = '';
+    launchCounterEl.appendChild(document.createTextNode('Hotdog Launches: '));
+    var s = document.createElement('span');
+    s.textContent = launchCount;
+    launchCounterEl.appendChild(s);
+  }
+  updateLaunchCounter();
+  var particles = [], animating = false, brentY = 0;
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  var exhaustColors = [
+    {r:255,g:215,b:0},{r:255,g:165,b:0},{r:255,g:190,b:50},
+    {r:220,g:150,b:0},{r:255,g:100,b:20},{r:255,g:80,b:30}
+  ];
+
+  function Particle(x,y,type) {
+    this.x=x; this.y=y; this.type=type;
+    var c=exhaustColors[Math.floor(Math.random()*exhaustColors.length)];
+    this.r=c.r; this.g=c.g; this.b=c.b;
+    if(type==='exhaust'){this.vx=(Math.random()-0.5)*8;this.vy=Math.random()*12+6;this.size=Math.random()*18+8;this.life=1;this.decay=Math.random()*0.015+0.008;this.gravity=0.15;}
+    else if(type==='spark'){var a=Math.random()*Math.PI*2,s=Math.random()*10+4;this.vx=Math.cos(a)*s;this.vy=Math.sin(a)*s;this.size=Math.random()*4+1;this.life=1;this.decay=Math.random()*0.03+0.02;this.gravity=0.1;}
+    else{this.vx=(Math.random()-0.5)*20;this.vy=Math.random()*-8+4;this.size=Math.random()*25+10;this.life=1;this.decay=Math.random()*0.008+0.004;this.gravity=0.3;}
+  }
+  Particle.prototype.update=function(){this.x+=this.vx;this.vy+=this.gravity;this.y+=this.vy;this.life-=this.decay;if(this.type==='exhaust'){this.size*=0.98;this.vx*=0.98;}if(this.type==='splat'&&this.y>canvas.height-this.size){this.y=canvas.height-this.size;this.vy=0;this.vx*=0.9;this.decay=0.006;}};
+  Particle.prototype.draw=function(){ctx.globalAlpha=Math.max(0,this.life);if(this.type==='spark'){ctx.fillStyle='rgb('+this.r+','+this.g+','+this.b+')';ctx.fillRect(this.x,this.y,this.size,this.size);}else{var g=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size);g.addColorStop(0,'rgba('+this.r+','+this.g+','+this.b+','+this.life+')');g.addColorStop(0.4,'rgba('+this.r+','+this.g+','+this.b+','+(this.life*0.6)+')');g.addColorStop(1,'rgba('+this.r+','+this.g+','+this.b+',0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;};
+
+  function burstDogs(cx, cy, count) {
+    for (var i = 0; i < count; i++) {
+      var dog = document.createElement('div');
+      dog.className = 'dog-burst';
+      dog.textContent = Math.random() > 0.4 ? '\u{1F32D}' : '\u{1F338}';
+      dog.style.left = cx + 'px';
+      dog.style.top = cy + 'px';
+      dog.style.fontSize = (1.2 + Math.random() * 2.5) + 'rem';
+      dog.style.setProperty('--bx', ((Math.random() - 0.5) * 300) + 'px');
+      dog.style.setProperty('--by', (Math.random() * 400 + 100) + 'px');
+      dog.style.setProperty('--br', (Math.random() * 720 - 360) + 'deg');
+      dog.style.animationDuration = (0.8 + Math.random() * 1) + 's';
+      document.body.appendChild(dog);
+      setTimeout(function() { dog.remove(); }, 2000);
+    }
+  }
+
+  function spawnExhaust(cx,cy,n){for(var i=0;i<n;i++)particles.push(new Particle(cx+(Math.random()-0.5)*80,cy,'exhaust'));for(var j=0;j<n/3;j++)particles.push(new Particle(cx+(Math.random()-0.5)*40,cy,'spark'));}
+  function spawnSplats(cx){for(var i=0;i<20;i++)particles.push(new Particle(cx+(Math.random()-0.5)*100,canvas.height*0.75,'splat'));}
+
+  function animateParticles(){
+    if(!animating&&particles.length===0)return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(brentLaunching&&brentY<canvas.height*1.5){
+      var exY=canvas.height-brentY+50;
+      var glow=ctx.createRadialGradient(canvas.width/2,exY,0,canvas.width/2,exY,150);
+      glow.addColorStop(0,'rgba(255,215,0,0.3)');glow.addColorStop(0.5,'rgba(255,165,0,0.1)');glow.addColorStop(1,'transparent');
+      ctx.fillStyle=glow;ctx.fillRect(canvas.width/2-150,exY-150,300,300);
+    }
+    particles=particles.filter(function(p){return p.life>0;});
+    particles.forEach(function(p){p.update();p.draw();});
+    requestAnimationFrame(animateParticles);
+    if(!animating&&particles.length===0)ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
+  // === TAP COUNTER ===
+  var tapCounter=document.getElementById('tapCounter');
+  var rocketHint=document.getElementById('rocketHint');
+  for(var p=0;p<5;p++){var pip=document.createElement('div');pip.className='tap-pip';tapCounter.appendChild(pip);}
+  var pips=tapCounter.querySelectorAll('.tap-pip');
+  var hintDismissed = false;
+  function updatePips(count){
+    pips.forEach(function(pip,i){if(i<count)pip.classList.add('filled');else pip.classList.remove('filled');});
+    if(count>0){tapCounter.classList.add('visible');}
+    else{tapCounter.classList.remove('visible');}
+  }
+
+  // === TAP HANDLER ===
+  var shakeWrap = document.getElementById('shakeWrap');
+  var lastTapTime = 0;
+
+  function handleBrentTap(e) {
+    e.stopPropagation(); e.preventDefault();
+    var now = Date.now();
+    if (now - lastTapTime < 100) return;
+    lastTapTime = now;
+    if (brentLaunching) return;
+    brentTaps++;
+    updatePips(brentTaps);
+
+    // Hide hint permanently on first tap
+    if (!hintDismissed) {
+      hintDismissed = true;
+      rocketHint.classList.add('hidden');
+    }
+
+    // Shake the inner wrapper (doesn't fight with translate)
+    var deg = brentTaps * 1.5 * (brentTaps % 2 === 0 ? 1 : -1);
+    shakeWrap.style.transform = 'rotate(' + deg + 'deg)';
+    setTimeout(function() { shakeWrap.style.transform = ''; }, 150);
+
+    if (brentTaps >= 2) {
+      animating = true;
+      for (var i = 0; i < brentTaps * 3; i++) {
+        var sp = new Particle(canvas.width / 2 + (Math.random() - 0.5) * 60, canvas.height - 30, 'spark');
+        sp.vy = -(Math.random() * 4 + 2);
+        particles.push(sp);
+      }
+      requestAnimationFrame(animateParticles);
+    }
+
+    clearTimeout(brentTimer);
+    brentTimer = setTimeout(function() { brentTaps = 0; updatePips(0); }, 1500);
+
+    if (brentTaps >= 5) {
+      brentTaps = 0;
+      clearTimeout(brentTimer);
+      updatePips(5);
+      tapCounter.classList.remove('visible');
+      launchBrent();
+    }
+  }
+
+  hotdogMan.addEventListener('touchstart', handleBrentTap, { passive: false });
+  hotdogMan.addEventListener('click', handleBrentTap);
+
+  function launchBrent() {
+    brentLaunching = true;
+    animating = true;
+    launchCount++;
+    pendingLaunches++;
+    globalTotal++;
+    localStorage.setItem('glizzyLaunches', String(launchCount));
+    updateLaunchCounter();
+    // Auto-sync every launch — use ??? if no initials set yet
+    if (userInitials) {
+      syncScore();
+    } else {
+      // Still add to global total even without initials
+      fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ initials: '???', launches: launchCount, addToTotal: 1 })
+      }).then(function(r){return r.json();}).then(function(d){
+        globalTotal = d.totalLaunches || 0;
+        updateLaunchCounter();
+      }).catch(function(){});
+    }
+
+    // Show nozzle
+    document.querySelector('.nozzle').classList.add('visible');
+
+    // Phase 1: Rumble
+    hotdogMan.classList.add('rumbling');
+    var rf = 0;
+    var ri = setInterval(function() { rf++; spawnExhaust(canvas.width / 2, canvas.height - 20, rf * 2); }, 50);
+    requestAnimationFrame(animateParticles);
+
+    // Phase 2: Launch via CSS class (smooth GPU-accelerated transition)
+    setTimeout(function() {
+      clearInterval(ri);
+      hotdogMan.classList.remove('rumbling');
+      document.body.classList.add('screen-shake');
+      spawnSplats(canvas.width / 2);
+
+      // CSS-driven launch — no JS animation loop needed
+      hotdogMan.classList.add('launching');
+
+      // Spawn particles + hotdog emoji explosions during flight
+      var exhaustInterval = setInterval(function() {
+        var rect = hotdogMan.getBoundingClientRect();
+        if (rect.bottom < -50) { clearInterval(exhaustInterval); return; }
+        spawnExhaust(canvas.width / 2, rect.bottom, 8);
+        burstDogs(canvas.width / 2, rect.bottom, 3);
+      }, 100);
+      // Big initial burst
+      burstDogs(canvas.width / 2, canvas.height - 50, 20);
+
+      setTimeout(function() { document.body.classList.remove('screen-shake'); }, 450);
+
+      // He's off screen — show congrats
+      setTimeout(function() {
+        clearInterval(exhaustInterval);
+        animating = false;
+        mainTitle.classList.add('congrats-mode');
+        setTimeout(function() { congratsTitle.classList.add('show'); }, 200);
+
+        // Hold, then reset
+        setTimeout(function() {
+          congratsTitle.classList.remove('show');
+          setTimeout(function() { mainTitle.classList.remove('congrats-mode'); }, 400);
+
+          // Hide nozzle before reset
+          document.querySelector('.nozzle').classList.remove('visible');
+
+          // Reset position
+          hotdogMan.classList.remove('launching');
+          hotdogMan.classList.add('resetting');
+          void hotdogMan.offsetWidth;
+
+          setTimeout(function() {
+            hotdogMan.classList.remove('resetting');
+            hotdogMan.classList.add('returning');
+
+            setTimeout(function() {
+              hotdogMan.classList.remove('returning');
+              brentLaunching = false;
+              animating = false;
+            }, 900);
+          }, 50);
+        }, 2200);
+      }, 1500);
+    }, 600);
+  }
+
   // === FLOATING HOTDOGS ===
-  const bg = document.getElementById('hotdogBg');
-  for (let i = 0; i < 100; i++) {
-    const el = document.createElement('div');
-    el.className = 'floating-dog';
-    el.textContent = '🌭';
-    el.style.left = (Math.random() * 100) + 'vw';
-    el.style.fontSize = (2 + Math.random() * 4) + 'rem';
-    el.style.opacity = (0.3 + Math.random() * 0.5);
-    el.style.animationDuration = (8 + Math.random() * 12) + 's';
-    el.style.animationDelay = -(Math.random() * 20) + 's';
+  var bg=document.getElementById('hotdogBg');
+  for(var i=0;i<120;i++){
+    var el=document.createElement('div');el.className='floating-dog';el.textContent='\u{1F32D}';
+    el.style.left=(Math.random()*100)+'vw';
+    el.style.fontSize=(1.2+Math.random()*3)+'rem';
+    el.style.opacity=(0.12+Math.random()*0.3);
+    el.style.animationDuration=(8+Math.random()*14)+'s';
+    el.style.animationDelay=-(Math.random()*22)+'s';
     bg.appendChild(el);
   }
 
-  // === GLIZZY WALLPAPER TILES ===
-  const wall = document.getElementById('glizzyWall');
-  const cols = Math.ceil(window.innerWidth / 64);
-  const rows = Math.ceil(window.innerHeight / 64);
-  for (let i = 0; i < cols * rows; i++) {
-    const d = document.createElement('div');
-    d.className = 'wall-dog';
-    d.textContent = '🌭';
-    d.style.animationDelay = (Math.random() * 4) + 's';
-    wall.appendChild(d);
-  }
-</script>
+  // === AUTO LAUNCH ===
+  var autoToggle = document.getElementById('autoToggle');
+  var autoOn = false, autoInterval = null;
 
+  autoToggle.addEventListener('click', function() {
+    autoOn = !autoOn;
+    autoToggle.classList.toggle('on', autoOn);
+    if (autoOn) {
+      // Use setInterval — runs even when tab is backgrounded
+      autoInterval = setInterval(function() {
+        if (document.hidden) {
+          // Tab is in background — just count silently, no animation
+          launchCount++;
+          pendingLaunches++;
+          globalTotal++;
+          localStorage.setItem('glizzyLaunches', String(launchCount));
+          updateLaunchCounter();
+          // Sync every 10 background launches
+          if (userInitials && pendingLaunches >= 10) syncScore();
+        } else {
+          if (!brentLaunching) launchBrent();
+        }
+      }, 5500);
+    } else {
+      clearInterval(autoInterval);
+      // Sync any pending when turning off
+      if (userInitials && pendingLaunches > 0) syncScore();
+    }
+  });
+
+  // === LEADERBOARD ===
+  var lbBtn = document.getElementById('lbBtn');
+  var lbOverlay = document.getElementById('lbOverlay');
+  var lbScores = document.getElementById('lbScores');
+  var lbInitials = document.getElementById('lbInitials');
+  var lbYourScore = document.getElementById('lbYourScore');
+  var lbYourInitials = document.getElementById('lbYourInitials');
+  var lbGate = document.getElementById('lbGate');
+  var lbContent = document.getElementById('lbContent');
+  var lbTotal = document.getElementById('lbTotal');
+  var userInitials = localStorage.getItem('glizzyInitials') || '';
+  var pendingLaunches = 0; // launches not yet synced to server
+
+  if (userInitials) lbInitials.value = userInitials;
+
+  // Fetch global total for the main page counter
+  fetch('/api/leaderboard').then(function(r){return r.json();}).then(function(d){
+    globalTotal = d.totalLaunches || 0;
+    updateLaunchCounter();
+  }).catch(function(){});
+
+  var globalTotal = 0;
+  // Override updateLaunchCounter to show global total
+  updateLaunchCounter = function() {
+    launchCounterEl.textContent = '';
+    launchCounterEl.appendChild(document.createTextNode('Global Hotdog Launches: '));
+    var s = document.createElement('span');
+    s.textContent = globalTotal;
+    launchCounterEl.appendChild(s);
+  };
+  updateLaunchCounter();
+
+  function openLb() {
+    lbOverlay.classList.add('open');
+    if (userInitials) {
+      lbGate.style.display = 'none';
+      lbContent.style.display = 'block';
+      lbYourInitials.textContent = userInitials;
+      lbYourScore.textContent = launchCount;
+      fetchScores();
+    } else {
+      lbGate.style.display = 'block';
+      lbContent.style.display = 'none';
+    }
+  }
+  function closeLb() { lbOverlay.classList.remove('open'); }
+
+  lbBtn.addEventListener('click', openLb);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
+
+  function enterLeaderboard() {
+    var val = lbInitials.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3);
+    if (!val || val.length < 2) return;
+    userInitials = val;
+    localStorage.setItem('glizzyInitials', userInitials);
+    lbGate.style.display = 'none';
+    lbContent.style.display = 'block';
+    lbYourInitials.textContent = userInitials;
+    lbYourScore.textContent = launchCount;
+    // Auto-submit current score
+    syncScore();
+  }
+
+  function fetchScores() {
+    fetch('/api/leaderboard').then(function(r){return r.json();}).then(function(d){
+      renderScores(d.scores || []);
+      lbTotal.textContent = d.totalLaunches || 0;
+      globalTotal = d.totalLaunches || 0;
+      updateLaunchCounter();
+    }).catch(function(){
+      lbScores.textContent = '';
+      var li = document.createElement('li');
+      li.className = 'lb-empty';
+      li.textContent = 'Could not load leaderboard';
+      lbScores.appendChild(li);
+    });
+  }
+
+  function renderScores(scores) {
+    lbScores.textContent = '';
+    if (!scores || scores.length === 0) {
+      var li = document.createElement('li');
+      li.className = 'lb-empty';
+      li.textContent = 'No launches yet. Be the first!';
+      lbScores.appendChild(li);
+      return;
+    }
+    var medals = ['\u{1F947}', '\u{1F948}', '\u{1F949}']; // gold, silver, bronze
+    scores.slice(0, 10).forEach(function(s, i) {
+      var li = document.createElement('li');
+      var rank = document.createElement('span');
+      rank.className = 'lb-rank' + (i < 3 ? ' gold' : '');
+      rank.textContent = i < 3 ? medals[i] : (i + 1) + '.';
+      li.appendChild(rank);
+      var init = document.createElement('span');
+      init.className = 'lb-initials';
+      init.textContent = s.initials;
+      li.appendChild(init);
+      var score = document.createElement('span');
+      score.className = 'lb-score';
+      score.textContent = s.launches;
+      li.appendChild(score);
+      lbScores.appendChild(li);
+    });
+  }
+
+  function syncScore() {
+    if (!userInitials || launchCount < 1) return;
+    var toAdd = pendingLaunches;
+    pendingLaunches = 0;
+    fetch('/api/leaderboard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ initials: userInitials, launches: launchCount, addToTotal: toAdd })
+    }).then(function(r){return r.json();}).then(function(d){
+      renderScores(d.scores || []);
+      lbTotal.textContent = d.totalLaunches || 0;
+      globalTotal = d.totalLaunches || 0;
+      updateLaunchCounter();
+      // Show the server's combined score for our initials
+      var myServerScore = launchCount;
+      (d.scores || []).forEach(function(s) {
+        if (s.initials === userInitials) myServerScore = s.launches;
+      });
+      lbYourScore.textContent = myServerScore;
+    }).catch(function(){});
+  }
+
+  function submitScore() { syncScore(); }
+
+  // Auto-sync every 10 launches or every 30 seconds
+  var syncInterval = setInterval(function() {
+    if (userInitials && pendingLaunches > 0) syncScore();
+  }, 30000);
+</script>
 </body>
 </html>
