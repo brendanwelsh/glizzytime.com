@@ -20,34 +20,19 @@
 
 ## About
 
-A wedding countdown site for Brent — who famously wore a hotdog costume. Features a live countdown timer, an interactive hotdog rocket launcher with particle effects, a global leaderboard backed by Cloudflare KV, and 120 floating hotdog emojis. Visitors tap the hotdog man 5 times to launch him into space with a full rocket animation sequence.
+Wedding countdown for Brent, who wore a hotdog costume. Has a live countdown, an interactive hotdog rocket launcher with canvas particle effects, a global leaderboard on Cloudflare KV, and 120 floating hotdog emojis. Tap the hotdog man 5 times to launch him into space.
 
-This started as a joke. It now has a persistent global leaderboard with thousands of launches.
+Started as a joke. Now has thousands of recorded launches.
 
 ## Features
 
-- **Wedding Countdown** — Live countdown to April 23rd, 2026 with days/hours/minutes/seconds display in styled blocks
-
-- **Hotdog Rocket Launcher** — Tap the hotdog man (Brent in costume) 5 times to initiate a full launch sequence:
-  1. Nozzle appears with rumble animation
-  2. Canvas particle exhaust fires up
-  3. Screen shakes on liftoff
-  4. Hotdog emoji burst explosion (20 emojis)
-  5. Continuous exhaust trail during flight
-  6. Congratulations screen with confetti
-  7. Smooth return-to-pad animation
-
-- **Canvas Particle System** — Real-time `<canvas>` particle engine for rocket exhaust. Orange/yellow particles with velocity, gravity, opacity decay, and size reduction. Runs at 60fps.
-
-- **Global Leaderboard** — Cloudflare Workers API (`/api/leaderboard`) backed by KV storage. Enter 2-3 letter initials, scores sync automatically. Top 10 displayed with gold/silver/bronze medals.
-
-- **Auto-Launch Mode** — Toggle button that launches the hotdog every 5.5 seconds automatically. Even counts launches silently when the tab is backgrounded, syncing every 10 launches.
-
-- **Floating Hotdog Rain** — 120 hotdog emojis floating upward across the viewport with randomized size, opacity, speed, and delay. Pure CSS animation.
-
-- **Gift Registry Link** — CTA button linking to the couple's registry
-
-- **Responsive** — Full-bleed background image with overlay gradient. Works on mobile with touch events.
+- **Countdown**: Live timer to April 23rd, 2026
+- **Rocket launcher**: Tap 5x to trigger a full launch sequence (nozzle, screen shake, canvas exhaust particles, emoji burst, congrats screen, return animation)
+- **Particle engine**: `<canvas>` 2D particles at 60fps for rocket exhaust (velocity, gravity, opacity decay)
+- **Global leaderboard**: Workers API + KV storage. Enter initials, scores sync automatically. Top 10 with medals.
+- **Auto-launch mode**: Launches every 5.5s. Counts silently when tab is backgrounded, syncs every 10 launches.
+- **Floating hotdogs**: 120 hotdog emojis drifting upward with randomized size/speed/opacity
+- **Gift registry link**
 
 ## Architecture
 
@@ -59,37 +44,34 @@ Browser                          Cloudflare
   |                                  |
   |  POST /api/leaderboard --------> |  Workers Function
   |       { initials, launches }     |  reads/writes KV
-  |  <-------- { scores, total } --- |
+  |  <-------- { scores, total }     |
   |                                  |
   |  GET /api/leaderboard ---------> |
-  |  <-------- top 10 + total ------ |
+  |  <-------- top 10 + total        |
 ```
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | Vanilla HTML/CSS/JS — 1,127 lines |
-| Fonts | Bebas Neue (display), Inter (body) via Google Fonts |
-| Particles | HTML5 Canvas 2D with requestAnimationFrame |
-| API | Cloudflare Pages Functions (Workers runtime) |
-| Storage | Cloudflare KV namespace (`LEADERBOARD`) |
+| Frontend | Vanilla HTML/CSS/JS, 1,127 lines |
+| Fonts | Bebas Neue, Inter via Google Fonts |
+| Particles | HTML5 Canvas 2D + requestAnimationFrame |
+| API | Cloudflare Pages Functions |
+| Storage | Cloudflare KV (`LEADERBOARD`) |
 | Hosting | Cloudflare Pages |
 
 ## Project Structure
 
 ```
 glizzytimer.com/
-  index.html                 # Full site — HTML, CSS, JS, canvas engine
-  bg.jpg                     # Hotdog close-up background photo
-  hotdog-man.png             # Brent in the hotdog costume (the rocket)
+  index.html                 # Full site + canvas engine
+  bg.jpg                     # Background photo
+  hotdog-man.png             # Brent in costume (the rocket)
   functions/
     api/
-      leaderboard.js         # GET/POST leaderboard — Workers function
+      leaderboard.js         # GET/POST leaderboard
   wrangler.toml              # Cloudflare config + KV binding
-  preview.png                # Screenshot for this README
-  CLAUDE.md                  # AI assistant context
-  README.md                  # You are here
 ```
 
 ## Deploy
@@ -98,12 +80,4 @@ glizzytimer.com/
 wrangler pages deploy . --project-name=hotdog-wedding
 ```
 
-> **Note:** The Cloudflare project name is `hotdog-wedding` (the original name before the domain was glizzytimer.com).
-
-## KV Namespace
-
-The leaderboard uses Cloudflare KV with namespace ID `b21a7eb58b3d40439295eac74a25ae36`. Each player's score is stored as a KV pair keyed by their initials.
-
-## License
-
-Private project. All rights reserved.
+Cloudflare project name is `hotdog-wedding` (original name). KV namespace ID: `b21a7eb58b3d40439295eac74a25ae36`.
