@@ -1,0 +1,6 @@
+name = "hotdog-wedding"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "LEADERBOARD"
+id = "b21a7eb58b3d40439295eac74a25ae36"
